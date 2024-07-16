@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employees</title>
+</head>
+<body>
+
+<h1>Employees</h1>
+
+<p><a href="add_employee">Add Employee</a></p>
+
+<p>
+    
+  <h1>Employee Details</h1>
+  <div class="row">
+    <div class="col-12">
+      <div class="employee-count">
+      
+      </div>
+      {% if employee %}
+        <div class="card bg-light ms-4 me-4 mb-4">
+          <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+              <h5 class="card-title fw-bold"><i class="fa-solid fa-address-book"></i> Employee Records</h5>
+              
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <div class="table-responsive">
+                <table class="table table-hover" id="class-list" aria-describedby="class-list_info">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Employee ID</th>
+                      <th scope="col">Employee Name</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for employee in employee %}
+                      <tr>
+                        <td><img src="{{ employee.profile_pic.url }}" class="rounded-circle p-1 border" alt="Employee Image" width="60" height="60"></td>
+                        <td>{{ employee.employee_id }}</td>
+                        <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+                        <td>{{ employee.designation }}</td>
+                        <td>{{ employee.department }}</td>
+                        <td>
+                          <a href="">
+                            <i class='bx bx-show' style="font-size: 18px; font-weight: bold;"></i>
+                          </a>
+                          <div class="modal" id="myModal{{ employee.id }}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                            <!-- Modal content -->
+                          </div>
+                          <a class="btn btn me-1" href="">
+                            <i class='bx bxs-edit' style="font-size: 18px; font-weight: bold;"></i>
+                          </a>
+                          <a href="">
+                            <i class='bx bx-trash' style="font-size: 18px; font-weight: bold;"></i>
+                          </a>
+                          <!-- Modal - Delete Employee -->
+                          <div class="modal" id="delete{{employee.id}}" tabindex="-1" aria-labelledby="myModalLabel2" aria-hidden="true">
+                            <!-- Modal content -->
+                          </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </p>
+          </div>
+        </div>
+      {% else %}
+        <div class="employee-count">
+          No employees found.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+
+</p>
+</body>
+</html>

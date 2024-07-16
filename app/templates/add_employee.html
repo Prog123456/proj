@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Employees</title>
+</head>
+<body>
+
+<h1>Add Employees</h1>
+<form action="{% url 'add_employee' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Add</button>
+    
+  </form>
+
+</body>
+</html>
