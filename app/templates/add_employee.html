@@ -1,18 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Add Employees</title>
+    <meta charset="UTF-8">
+    <title>Create Employee</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <h1>Create Employee</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 
-<h1>Add Employees</h1>
-<form action="{% url 'add_employee' %}" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#id_country").change(function() {
+                var url = "{% url 'load_regions' %}";  // URL to the load_regions view
+                var countryId = $(this).val();
 
-    <button type="submit" class="btn btn-primary">Add</button>
-    
-  </form>
+                $.ajax({
+                    url: url,
+                    data: {
+                        'country_id': countryId
+                    },
+                    success: function(data) {
+                        $("#id_state").html('<option value="">---------</option>');
+                        data.forEach(function(region) {
+                            $("#id_state").append(new Option(region.name, region.id));
+                        });
+                        $("#id_district").html('<option value="">---------</option>');  // Clear district field
+                    }
+                });
+            });
 
+            $("#id_state").change(function() {
+                var url = "{% url 'load_cities' %}";  // URL to the load_cities view
+                var stateId = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        'region_id': stateId
+                    },
+                    success: function(data) {
+                        $("#id_district").html('<option value="">---------</option>');
+                        data.forEach(function(subregion) {
+                            $("#id_district").append(new Option(subregion.name, subregion.id));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
