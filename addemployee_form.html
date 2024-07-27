@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+     <!-- intl-tel-input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <style>
+        .drop-zone {
+            border: 2px dashed #cccccc;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #9999992b;
+            font-size: 16px;
+            position: relative;
+        }
+        .drop-zone .icon {
+            font-size: 48px;
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+        .drop-zone.dragover {
+            border-color: #007bff;
+            color: #007bff;
+        }
+        .drop-zone input {
+            display: none;
+        }
+        .drop-zone img {
+            max-width: 100px;
+            display: none;
+            margin-top: 20px;
+            position: relative;
+        }
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            display: none;
+            color: red;
+        }
+        .image-name {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Add Employee</h2>
+        <hr>
+        <form action="" method="post" name="add_employee" autocomplete="off" enctype='multipart/form-data' >
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="firstName" class="form-label">Full Name</label>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="firstName">
+                             <div id="nameHelp" class="form-text">First Name</div>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" id="lastName">
+                            <div id="nameHelp" class="form-text">Last Name</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="dateOfBirth">
+                </div>
+            </div>
+            <div class="row mb-3 mt-2">
+                <div class="col">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-select" id="gender" onchange="handleGenderChange()">
+                        <option selected>Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="example@example.com">
+                </div>
+                <div class="col">
+                    <label for="phoneNumber" class="form-label">Mobile</label>
+                    <div class="input-group">
+                        
+                        <input type="tel" class="form-control" id="phoneNumber" placeholder="000-000-0000">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="streetAddress" placeholder="Street Address">
+                <div class="row mt-2">
+                    <div class="col">
+                     <label for="country" class="form-label">Country</label>
+                    <select class="form-select" id="country">
+                        <option selected>Select Country</option>
+                        <!-- Add country options here -->
+                    </select>
+
+                    </div>
+                    <div class="col">
+                      <label for="state" class="form-label">State</label>
+                      <select class="form-select" id="state">
+                        <option selected>Select State</option>
+                        <!-- Add state options here -->
+                    </select>
+                    </div>
+                    <div class="col">
+                      <label for="district" class="form-label">District</label>
+                        <select class="form-select" id="district">
+                        <option selected>Select District</option>
+                        <!-- Add district options here -->
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3 mt-2">
+                <div class="col">
+                  <label for="zipcode" class="form-label">ZipCode/Postal</label>
+                        <input type="number" class="form-control" id="postal" placeholder="Postal / Zip Code">
+                </div>
+                <div class="col">
+                    <label for="bloodGroup" class="form-label">Blood Group</label>
+                    <select class="form-select" id="bloodGroup">
+                        <option selected>Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div id="fatherNameField" class="col">
+                  <label for="fathername" class="form-label">Father Name</label>
+                        <input type="text" class="form-control" id="fatherName" placeholder="Father Name">
+                </div>
+                 <div id="husbandNameField" class="col" style="display: none;">
+                  <label for="fathername" class="form-label">Husband Name</label>
+                        <input type="text" class="form-control" id="husbandName" placeholder="Husband Name">
+                </div>
+                  <div id="wifeNameField" class="col"  style="display: none;">
+                  <label for="wifename" class="form-label">Wife Name</label>
+                        <input type="text" class="form-control" id="wifename" placeholder="Wife Name">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="emergencyContact" class="form-label">Emergency Contact Number</label>
+                    <input type="text" class="form-control" id="emergencyContact">
+                </div>
+                <div class="col-md-6">
+                    <label for="maritalStatus" class="form-label">Marital Status</label>
+                    <select class="form-select"  id="maritalStatus" onchange="handleMaritalStatusChange()">
+                        <option selected>Select Status</option>
+                        <option value="married">Married</option>
+                        <option value="unmarried">Unmarried</option>
+                        <option value="divorce">Divorce</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="designation" class="form-label">Designation</label>
+                    <select class="form-select" id="designation">
+                        <option selected>Select Designation</option>
+                        <!-- Add designation options here -->
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="department" class="form-label">Department</label>
+                    <select class="form-select" id="department">
+                        <option selected>Select Department</option>
+                        <option value="CRM">CRM</option>
+                        <option value="E&P">E&P</option>
+                        <option value="R&D">R&D</option>
+                        <option value="S&D">S&D</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="employeeId" class="form-label">Employee ID</label>
+                    <input type="text" class="form-control" id="employeeId">
+                </div>
+                <div class="col-md-6">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <div class="drop-zone" id="drop-zone">
+                        <span class="icon bi bi-upload"></span>
+                        <span class="drop-zone-text">Drop file here or click to upload</span>
+                        <input type="file" id="image" accept="image/*" onchange="handleFileChange(this)">
+                        <span class="image-name"></span>
+                        <img id="uploadedImage" src="" alt="Uploaded Image">
+                        <span class="close-icon bi bi-x-circle" onclick="removeImage()"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq6A5iKTSmNDSfH7Wrfp4iHTP8dGLsT1VxSv2YFctO/SzWXsZ8V" crossorigin="anonymous"></script>
+    <!-- intl-tel-input JS -->
+    <!-- intl-tel-input JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script>
+         // Initialize intl-tel-input
+         const phoneInput = document.querySelector("#phoneNumber");
+         const phoneInputInstance = window.intlTelInput(phoneInput, {
+             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+         });
+ 
+         const emergencyInput = document.querySelector("#emergencyContact");
+         const emergencyInputInstance = window.intlTelInput(emergencyInput, {
+             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+         });
+ 
+        function handleMaritalStatusChange() {
+            var maritalStatus = document.getElementById('maritalStatus').value;
+            var husbandNameField = document.getElementById('husbandNameField');
+            var wifeNameField = document.getElementById('wifeNameField');
+            var fatherNameField = document.getElementById('fatherNameField');
+            if (maritalStatus === 'married') {
+                if (document.getElementById('gender').value === 'female') {
+                    husbandNameField.style.display = 'block';
+                    wifeNameField.style.display = 'none';
+                    fatherNameField.style.display = 'none';
+                } else if (document.getElementById('gender').value === 'male') {
+                    husbandNameField.style.display = 'none';
+                    wifeNameField.style.display = 'block';
+                    fatherNameField.style.display = 'none';
+                } else {
+                    husbandNameField.style.display = 'block';
+                    wifeNameField.style.display = 'block';
+                    fatherNameField.style.display = 'none';
+                }
+            } else {
+                husbandNameField.style.display = 'none';
+                wifeNameField.style.display = 'none';
+                fatherNameField.style.display = 'block';
+            }
+        }
+
+        function handleGenderChange() {
+            var gender = document.getElementById('gender').value;
+            var maritalStatus = document.getElementById('maritalStatus').value;
+            var husbandNameField = document.getElementById('husbandNameField');
+            var wifeNameField = document.getElementById('wifeNameField');
+            var fatherNameField = document.getElementById('fatherNameField');
+            if (maritalStatus === 'married') {
+                if (gender === 'female') {
+                    husbandNameField.style.display = 'block';
+                    wifeNameField.style.display = 'none';
+                    fatherNameField.style.display = 'none';
+                } else if (gender === 'male') {
+                    husbandNameField.style.display = 'none';
+                    wifeNameField.style.display = 'block';
+                    fatherNameField.style.display = 'none';
+                } else {
+                    husbandNameField.style.display = 'block';
+                    wifeNameField.style.display = 'block';
+                    fatherNameField.style.display = 'none';
+                }
+            } else {
+                husbandNameField.style.display = 'none';
+                wifeNameField.style.display = 'none';
+                fatherNameField.style.display = 'block';
+            }
+        }
+
+        document.getElementById('drop-zone').addEventListener('click', function() {
+            document.getElementById('image').click();
+        });
+
+        document.getElementById('drop-zone').addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.add('dragover');
+        });
+
+        document.getElementById('drop-zone').addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+        });
+
+        document.getElementById('drop-zone').addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+            var files = e.dataTransfer.files;
+            document.getElementById('image').files = files;
+            handleFileChange(document.getElementById('image'));
+        });
+
+        function handleFileChange(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+            var imageElement = document.getElementById('uploadedImage');
+            var closeIcon = document.querySelector('.close-icon');
+            var imageName = document.querySelector('.image-name');
+
+            reader.onload = function(e) {
+                imageElement.src = e.target.result;
+                imageElement.style.display = 'block';
+                closeIcon.style.display = 'block';
+                imageName.textContent = file.name;
+                imageName.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage() {
+            var imageElement = document.getElementById('uploadedImage');
+            var closeIcon = document.querySelector('.close-icon');
+            var imageName = document.querySelector('.image-name');
+            var fileInput = document.getElementById('image');
+
+            fileInput.value = '';
+            imageElement.style.display = 'none';
+            closeIcon.style.display = 'none';
+            imageName.style.display = 'none';
+        }
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-ZVP6xA0CHs3J6HgN0S3JnMpuMMS8pS8Mjq3K8sL2mMkn5HiCKFGWwAW4/8I9FZCE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGnirC3PobG2yCiw7v9KmOHK9z9AX0TZL2Im8e1moE+nT3GpGIL4yvgp5YG" crossorigin="anonymous"></script>
+</body>
+</html>
